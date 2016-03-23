@@ -51,3 +51,18 @@ Sample buffer:
   38 81 67 55 00 00 00 00  /* address of movl cookie, edi */
 
   81 19 40 00 00 00 00 00  /* address of touch2 */
+
+Phase 2
+=======
+
+Call touch3() with cookie's string representation as argument
+Similar strategy as in Phase 1 but you have to put the argument
+deeper in the stack because if not, other called functions will overwrite
+it. To work, the buffer must be large (I did 24 * 8 bytes), and I put the
+argument at the end. The trickiest part is making sure that you get the 
+right endian form for the string and you know where the address of the 
+argument is.
+
+Solution:
+
+
